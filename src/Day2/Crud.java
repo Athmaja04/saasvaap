@@ -14,9 +14,7 @@ class Student {
     }
 
     void display() {
-        System.out.println("ID: " + id +
-                ", Name: " + name +
-                ", Age: " + age);
+        System.out.println("ID: " + id + ", Name: " + name + ", Age: " + age);
     }
 }
 
@@ -52,7 +50,7 @@ public class Crud {
 
         System.out.println("\nStudent Details:");
 
-        for (Student s : students) {
+        for (Student s : students) {//for(int i=0;i<students.size();i++)
             s.display();
         }
     }
@@ -89,14 +87,12 @@ public class Crud {
         System.out.print("Enter Student ID to Delete: ");
         int id = sc.nextInt();
 
-        Iterator<Student> it = students.iterator();
+        for (int i = 0; i < students.size(); i++) {
 
-        while (it.hasNext()) {
+            if (students.get(i).id == id) {
 
-            Student s = it.next();
+                students.remove(i);
 
-            if (s.id == id) {
-                it.remove();
                 System.out.println("Student Deleted Successfully!");
                 return;
             }
