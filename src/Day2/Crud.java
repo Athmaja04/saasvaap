@@ -2,46 +2,62 @@ package Day2;
 
 import java.util.*;
 
+interface StudentCRUD {
+    void create();
+    void read();
+    void update();
+    void delete();
+}
+
 class Student {
     int id;
     String name;
     int age;
 
-    Student(int id, String name, int age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
+    public String toString()
+    {
+        return ("ID: " + id + ", Name: " + name + ", Age: " + age);
     }
 
-    void display() {
-        System.out.println("ID: " + id + ", Name: " + name + ", Age: " + age);
+    public boolean equals(Student s1)
+    {
+        return this.id==s1.id;
     }
 }
 
-public class Crud {
-
+class Manage implements StudentCRUD{
     static ArrayList<Student> students = new ArrayList<>();
     static Scanner sc = new Scanner(System.in);
 
 
-    public static void create() {
+    public void create() {
+        Student s = new Student();
         System.out.print("Enter Student ID: ");
-        int id = sc.nextInt();
+        s.id = sc.nextInt();
+        for(Student st : students)
+        {
+            if(st.id == s.id)
+            {
+                System.out.println("Student ID already exists");
+                return;
+            }
+        }
         sc.nextLine();
 
+
         System.out.print("Enter Student Name: ");
-        String name = sc.nextLine();
+        s.name = sc.nextLine();
 
         System.out.print("Enter Student Age: ");
-        int age = sc.nextInt();
+        s.age = sc.nextInt();
 
-        students.add(new Student(id, name, age));
+        students.add(s);
 
         System.out.println("Student Added Successfully!");
     }
 
 
-    public static void read() {
+    public void read() {
 
         if (students.isEmpty()) {
             System.out.println("No Students Found!");
@@ -50,20 +66,20 @@ public class Crud {
 
         System.out.println("\nStudent Details:");
 
-        for (Student s : students) {//for(int i=0;i<students.size();i++)
-            s.display();
+        for (Student i : students) {//for(int i=0;i<students.size();i++)
+            System.out.println(i);
         }
     }
 
 
-    public static void update() {
+    public void update() {
 
         System.out.print("Enter Student ID to Update: ");
-        int id = sc.nextInt();
+        int upid = sc.nextInt();
 
         for (Student s : students) {
 
-            if (s.id == id) {
+            if (s.id == upid) {
 
                 sc.nextLine();
 
@@ -82,14 +98,14 @@ public class Crud {
     }
 
 
-    public static void delete() {
+    public void delete() {
 
         System.out.print("Enter Student ID to Delete: ");
-        int id = sc.nextInt();
+        int dlid = sc.nextInt();
 
         for (int i = 0; i < students.size(); i++) {
 
-            if (students.get(i).id == id) {
+            if (students.get(i).id == dlid) {
 
                 students.remove(i);
 
@@ -98,41 +114,37 @@ public class Crud {
             }
         }
 
+
         System.out.println("Student Not Found!");
     }
-
+}
+public class Crud {
     public static void main(String[] args) {
-
+        Scanner sc= new Scanner(System.in);
+        StudentCRUD m = new Manage();
         int choice;
 
         do {
 
-            System.out.println("\n===== STUDENT CRUD MENU =====");
-            System.out.println("1. Create Student");
-            System.out.println("2. View Students");
-            System.out.println("3. Update Student");
-            System.out.println("4. Delete Student");
-            System.out.println("5. Exit");
-            System.out.print("Enter Your Choice: ");
-
+            System.out.println("\nSTUDENT CRUD MENU\n1. Create Student\n2. View Students\n3. Update Student\n4. Delete Student\n5. Exit\nEnter Your Choice: ");
             choice = sc.nextInt();
 
             switch (choice) {
 
                 case 1:
-                    create();
+                    m.create();
                     break;
 
                 case 2:
-                    read();
+                    m.read();
                     break;
 
                 case 3:
-                    update();
+                    m.update();
                     break;
 
                 case 4:
-                    delete();
+                    m.delete();
                     break;
 
                 case 5:
