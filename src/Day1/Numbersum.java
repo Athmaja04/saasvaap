@@ -12,6 +12,8 @@ public class Numbersum {
         }
         System.out.println("Sum of digits = "+sum);
 
+
+
     }
 
 }
